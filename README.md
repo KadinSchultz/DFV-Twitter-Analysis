@@ -9,7 +9,6 @@ This repository contains the code used by Kadin Schultz during his thesis at UNS
 ├── knnClassifier.py
 ├── main.py
 └── Data Collection
-
     ├── Data to process
     ├── Processed
     |   ├── Processed Hashtag Lists

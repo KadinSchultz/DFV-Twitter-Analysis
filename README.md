@@ -2,12 +2,14 @@
 This repository contains the code used by Kadin Schultz during his thesis at UNSW.
 
 ### Required Folder Structure
+```
 .
 ├── basicAnalytics.py
 ├── collectTwitterData.py
 ├── knnClassifier.py
 ├── main.py
 └── Data Collection
+
     ├── Data to process
     ├── Processed
     |   ├── Processed Hashtag Lists
@@ -20,7 +22,7 @@ This repository contains the code used by Kadin Schultz during his thesis at UNS
         ├── Data model tables
         |   └── Knn testing
         └── n-grams
-    
+```
 
 ### main.py
 This file executes the key functions from the three others.

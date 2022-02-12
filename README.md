@@ -1,5 +1,26 @@
-# DFV-Twitter-Analysis
+# DFV Twitter Analysis
 This repository contains the code used by Kadin Schultz during his thesis at UNSW.
+
+### Required Folder Structure
+.
+├── basicAnalytics.py
+├── collectTwitterData.py
+├── knnClassifier.py
+├── main.py
+└── Data Collection
+    ├── Data to process
+    ├── Processed
+    |   ├── Processed Hashtag Lists
+    |   ├── Processed Hashtags
+    |   ├── Processed Mention Lists
+    |   ├── Processed Mentions
+    |   ├── Processed Tweets
+    |   └── Raw data
+    └── Summary data
+        ├── Data model tables
+        |   └── Knn testing
+        └── n-grams
+    
 
 ### main.py
 This file executes the key functions from the three others.

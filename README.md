@@ -21,5 +21,6 @@ scrapeTweets(keyword = 'domestic violence',
 ```knnAnalysisTestLoop()``` will train and test K-Nearest Neighbours Classifiers with various sample sizes and K-sizes, so that analysts can decide which parameters they want to use in their model.
 
 ```
-knnAnalysisTestLoop(sampleRange = [1000, 2500, 5000, 10000, 25000, 50000], nNeighbourRange = [3, 5, 7, 9])
+knnAnalysisTestLoop(sampleRange = [1000, 2500, 5000, 10000, 25000, 50000],
+                    nNeighbourRange = [3, 5, 7, 9])
 ```

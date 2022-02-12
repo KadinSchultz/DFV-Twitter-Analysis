@@ -1,9 +1,3 @@
-# Correlation heatmap
-# Network strength diagram
-# https://www.freecodecamp.org/news/basic-data-analysis-on-twitter-with-python-251c2a85062e/
-# https://towardsdatascience.com/analysis-on-tweets-using-python-and-twint-c7e6ebce8805
-# https://towardsdatascience.com/a-guide-to-mining-and-analysing-tweets-with-r-2f56818fdd16
-
 import numpy as np
 import pandas as pd
 
@@ -305,5 +299,4 @@ def generateKnnModel():
     return clf
 
 if __name__ == "__main__":
-    pass
-    # knnAnalysisTestLoop()
+    knnAnalysisTestLoop()

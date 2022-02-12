@@ -9,7 +9,9 @@ This file contains all of the functions required to download Tweets from Twitter
 
 ```scrapeTweets()``` will save all Tweets within the startDate and endDate, containing the specified keyword. The Tweets will be saved within monthly .CSV files. ```processTweetFiles()``` will process/clean all of the monthly Tweet .CSV files and compile them into a singular file.
 ```
-scrapeTweets(keyword = 'domestic violence', startDate = datetime(2022, 1, 1), endDate = datetime(2022, 1, 30))
+scrapeTweets(keyword = 'domestic violence',
+             startDate = datetime(2022, 1, 1),
+             endDate = datetime(2022, 1, 30))
 ```
 
 ### basicAnalytics.py

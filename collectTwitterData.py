@@ -214,8 +214,9 @@ def processTweetFiles():
                     fileList.append(os.path.join(path, name))
 
         combinedCSV = pd.concat([pd.read_csv(f) for f in fileList])
-        combinedCSV.to_csv('{} v2.csv'.format(inputFilePath), index = False)
-        print('{} completed.'.format(inputFilePath))
+        outputFile = 'Data Collection\\Data to process\\{}.csv'.format(inputFilePath[36:])
+        combinedCSV.to_csv('{}.csv'.format(outputFile), index = False)
+        print('{} completed.'.format(outputFile))
 
 
 if __name__ == "__main__":

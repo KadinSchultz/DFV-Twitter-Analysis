@@ -25,6 +25,35 @@ importTweets = 0
 baseAnalysis = 0
 
 
+# Import information from Twitter based on a keyword and date range
+def scrapeTweets(keyword = 'domestic violence', startDate = datetime(2021, 12, 1), endDate = datetime(2022, 1, 1)):
+    startTime = time()
+    currentDate = startDate
+
+    # Process the imports in monthly chunks
+    while currentDate <= endDate:
+        loopStart = time()
+        tweetList = []
+
+        sinceDateStr = currentDate.strftime('%Y-%m-%d')
+        untilDateStr = (currentDate + relativedelta(months = 1)).strftime('%Y-%m-%d')
+        scrapeString = '{} since:{} until:{} lang:en'.format(keyword, sinceDateStr, untilDateStr)
+        print('Starting w/ search string: [{}] ...'.format(scrapeString))
+        for i, tweet in enumerate(sntwitter.TwitterSearchScraper(scrapeString).get_items()):
+         	tweetList.append([tweet.id,tweet.date, tweet.user.username, tweet.user.displayname,
+                            tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount, tweet.quoteCount,
+                            tweet.mentionedUsers, tweet.hashtags])
+
+        fileName = 'Data Collection\\Data to process\\[{}] tweets {}-{}.csv'.format(keyword, currentDate.strftime('%Y%m%d'), (currentDate + relativedelta(months = 1, days = -1)).strftime('%Y%m%d'))
+        dfTweets = pd.DataFrame(tweetList, columns = ['ID', 'Date', 'Username', 'Display Name', 'Content', 'Reply Count', 'Retweet Count', 'Like Count', 'Quote Count', 'Mentioned Users', 'Hashtags'])
+        dfTweets.to_csv(fileName)
+
+        currentDate += relativedelta(months = 1)
+        print('{} --- {} Tweets downloaded in {}.'.format(datetime.now().strftime("%H:%M:%S"), currentDate.strftime('%B-%y'), str(timedelta(seconds = round(time() - loopStart)))))
+
+    print('Imports completed in {}.'.format(str(timedelta(seconds = round(time() - startTime)))))
+
+
 # Remove unwanted content from a piece of text
 def removeContent(text):
     # Remove &amp; symbols
@@ -57,36 +86,6 @@ def processText(text, stem = False): #clean text
     #     clean_text = [stemmer.stem(word) for word in clean_text]
 
     return ' '.join(clean_text)
-
-
-# Import information from Twitter based on a keyword and date range
-def scrapeTweets(keyword = 'domestic violence', startDate = datetime(2021, 12, 1), endDate = datetime(2022, 1, 1)):
-    startTime = time()
-    currentDate = startDate
-
-    # Process the imports in monthly chunks
-    while currentDate <= endDate:
-        loopStart = time()
-        tweetList = []
-
-        sinceDateStr = currentDate.strftime('%Y-%m-%d')
-        untilDateStr = (currentDate + relativedelta(months = 1)).strftime('%Y-%m-%d')
-        scrapeString = '{} since:{} until:{} lang:en'.format(keyword, sinceDateStr, untilDateStr)
-        print('Starting w/ search string: [{}] ...'.format(scrapeString))
-        for i, tweet in enumerate(sntwitter.TwitterSearchScraper(scrapeString).get_items()):
-         	tweetList.append([tweet.id,tweet.date, tweet.user.username, tweet.user.displayname,
-                            tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount, tweet.quoteCount,
-                            tweet.mentionedUsers, tweet.hashtags])
-
-        fileName = 'Data Collection\\Data to process\\[{}] tweets {}-{}.csv'.format(keyword, currentDate.strftime('%Y%m%d'), (currentDate + relativedelta(months = 1, days = -1)).strftime('%Y%m%d'))
-        dfTweets = pd.DataFrame(tweetList, columns = ['ID', 'Date', 'Username', 'Display Name', 'Content', 'Reply Count', 'Retweet Count', 'Like Count', 'Quote Count', 'Mentioned Users', 'Hashtags'])
-        dfTweets.to_csv(fileName)
-
-        currentDate += relativedelta(months = 1)
-        print('{} --- {} Tweets downloaded in {}.'.format(datetime.now().strftime("%H:%M:%S"), currentDate.strftime('%B-%y'), str(timedelta(seconds = round(time() - loopStart)))))
-
-    print('Imports completed in {}.'.format(str(timedelta(seconds = round(time() - startTime)))))
-
 
 # Generate sentiment analysis figures based on Tweet contents
 def sentimentAnalysis(df):

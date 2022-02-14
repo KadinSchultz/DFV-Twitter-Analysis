@@ -12,8 +12,6 @@ fileHashtags = 'Data Collection\\Hashtags.csv'
 fileHashtagList = 'Data Collection\\Hashtag Lists.csv'
 fileMentions = 'Data Collection\\Mentions.csv'
 fileMentionList = 'Data Collection\\Mention Lists.csv'
-importTweets = 0
-baseAnalysis = 0
 
 
 # Collect and format data from CSVs for use in analysis functions
@@ -93,6 +91,7 @@ def processBaseAnalysis():
     # Generate monthly totals for unigrams, bigrams, and trigrams and output to CSVs
     cols = ['Phrase', 'Count', 'Month']
     dateList = dfTweets['Month'].unique()
+    dateList = [dL for dL in dateList if not dL.startswith('2022')]
     for n in nGram:
         topTweets = pd.DataFrame(columns = cols)
         topHashtags = pd.DataFrame(columns = cols)

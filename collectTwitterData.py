@@ -14,17 +14,6 @@ from time import time
 
 pd.options.mode.chained_assignment = None
 
-# Global variables
-fileTweets = 'Data Collection\\Tweets.csv'
-fileTweetTopics = 'Data Collection\\Tweet Topics.csv'
-fileHashtags = 'Data Collection\\Hashtags.csv'
-fileHashtagList = 'Data Collection\\Hashtag Lists.csv'
-fileMentions = 'Data Collection\\Mentions.csv'
-fileMentionList = 'Data Collection\\Mention Lists.csv'
-importTweets = 0
-baseAnalysis = 0
-
-
 # Import information from Twitter based on a keyword and date range
 def scrapeTweets(keyword = 'domestic violence', startDate = datetime(2021, 12, 1), endDate = datetime(2022, 1, 1)):
     startTime = time()
@@ -52,6 +41,25 @@ def scrapeTweets(keyword = 'domestic violence', startDate = datetime(2021, 12, 1
         print('{} --- {} Tweets downloaded in {}.'.format(datetime.now().strftime("%H:%M:%S"), currentDate.strftime('%B-%y'), str(timedelta(seconds = round(time() - loopStart)))))
 
     print('Imports completed in {}.'.format(str(timedelta(seconds = round(time() - startTime)))))
+    return dfTweets
+
+
+# An altered version of the scrapeTweets() function, exclusive to one month (currently configured for January)
+def scrapeTweetsJanuary(keyword = 'domestic violence', startDate = datetime(2022, 1, 1), endDate = datetime(2022, 1, 31)):
+    startTime = time()
+    tweetList = []
+    scrapeString = '{} since:{} until:{} lang:en'.format(keyword, startDate, endDate)
+    print('Starting w/ search string: [{}] ...'.format(scrapeString))
+    for i, tweet in enumerate(sntwitter.TwitterSearchScraper(scrapeString).get_items()):
+     	tweetList.append([tweet.id,tweet.date, tweet.user.username, tweet.user.displayname,
+                        tweet.content, tweet.replyCount, tweet.retweetCount, tweet.likeCount, tweet.quoteCount,
+                        tweet.mentionedUsers, tweet.hashtags, tweet.url])
+
+    fileName = 'Data Collection\\Jan-22 Tweets.csv'
+    dfTweets = pd.DataFrame(tweetList, columns = ['ID', 'Date', 'Username', 'Display Name', 'Content', 'Reply Count', 'Retweet Count', 'Like Count', 'Quote Count', 'Mentioned Users', 'Hashtags', 'URL'])
+    dfTweets.to_csv(fileName, index = False)
+
+    print('Imports completed in {}.'.format(str(timedelta(seconds = round(time() - startTime)))))
 
 
 # Remove unwanted content from a piece of text
@@ -71,7 +79,7 @@ def removeContent(text):
     return text
 
 
-# Clean the input text
+# Clean the input 
 def processText(text, stem = False): #clean text
     text = removeContent(text)
 
@@ -82,10 +90,8 @@ def processText(text, stem = False): #clean text
     # Remove words from NLTK's stopword library
     clean_text = [word for word in tokenized_text if word not in stopwords.words('english')]
 
-    # if stem:
-    #     clean_text = [stemmer.stem(word) for word in clean_text]
-
     return ' '.join(clean_text)
+
 
 # Generate sentiment analysis figures based on Tweet contents
 def sentimentAnalysis(df):

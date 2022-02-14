@@ -10,6 +10,7 @@ This repository contains the code used by Kadin Schultz during his thesis at UNS
 ├── main.py
 └── Data Collection
     ├── Data to process
+    ├── Method testing
     ├── Processed
     |   ├── Processed Hashtag Lists
     |   ├── Processed Hashtags
@@ -45,4 +46,19 @@ scrapeTweets(keyword = 'domestic violence',
 ```
 knnAnalysisTestLoop(sampleRange = [1000, 2500, 5000, 10000, 25000, 50000],
                     nNeighbourRange = [3, 5, 7, 9])
+```
+
+```accuracyMeasurementLoop()``` is a more indepth train and test function than knnAnalysisTestLoop(), reporting on the True/False-Positive/Negative totals, albeit taking much longer to process.
+
+```
+accuracyMeasurementLoop(sampleSize = 10000,
+                            n_neighbours = 7)
+```
+
+```runKnnModelForJanuary()``` executes the K-Nearest Neighbours Classifiers on Tweets from January-22.
+
+```
+runKnnModelForJanuary(sampleSize = 5000,
+                      n_neighbours = 9,
+                      method = 0)
 ```
